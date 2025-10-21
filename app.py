@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import os, csv
 from datetime import datetime
+import time
 
 # --- Flask Setup ---
 app = Flask(__name__)
@@ -17,6 +18,7 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 basedir = os.path.abspath(os.path.dirname(__file__))
 db_path = os.path.join(basedir, 'app.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {"connect_args": {"timeout": 15}}
 db = SQLAlchemy(app)
 
 # --- Upload settings ---
@@ -110,6 +112,7 @@ def login():
             session['role'] = user.role
             flash(f'Logged in successfully as {user.username}', 'success')
             add_log(user.username, 'Logged in')
+            time.sleep(5)  # 🕒 Let the DB and session settle
             if user.role == 'Admin':
                 return redirect(url_for('dashboard_admin'))
             elif user.role == 'Instructor':
@@ -127,6 +130,7 @@ def logout():
     session.clear()
     if user:
         add_log(user, 'Logged out')
+        time.sleep(5)  # 🕒 Prevent SQLite lock or empty data
     return redirect(url_for('login'))
 
 # Change Password
@@ -146,6 +150,7 @@ def change_password():
         user.password = generate_password_hash(form.new_password.data)
         db.session.commit()
         add_log(user.username, 'Changed password')
+        time.sleep(5)
         flash("✅ Password changed successfully!", "success")
 
         if user.role == 'Admin':
