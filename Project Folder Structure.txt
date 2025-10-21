@@ -1,0 +1,34 @@
+D:\USTP Files\My_student_grade_portal\Program 42(locally functional)\
+│
+├── app.py                      # Your main Flask application
+├── app.db                      # Your SQLite database (in the root)
+│
+├── templates/                  # All your HTML files
+│   ├── add_instructor.html
+│   ├── add_student.html
+│   ├── change_password.html
+│   ├── create_user.html
+│   ├── dashboard_admin.html
+│   ├── dashboard_instructor.html
+│   ├── dashboard_student.html
+│   ├── edit_instructor.html
+│   ├── edit_student.html
+│   ├── instructors.html
+│   ├── login.html
+│   ├── logs.html
+│   ├── students.html
+│   └── upload_students.html
+│
+├── static/                     # Your CSS, JS, and image files
+│   ├── css/
+│   │   ├── student.css
+│   │	└── style.css
+│   └── js/
+│       ├── student.js
+│   	└── script.js
+│
+├── uploads/                    # Where uploaded CSV or files are stored
+│
+├── requirements.txt            # All dependencies for Render
+├── Procfile                    # Tells Render how to run your app
+└── runtime.txt                 # Specifies your Python version

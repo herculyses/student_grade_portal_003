@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Students CSV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h3 class="text-primary mb-4">Upload Students via CSV</h3>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} flash">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="card shadow-sm p-4 mb-4">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="file" class="form-label">Select CSV File</label>
+                <input type="file" name="file" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Upload CSV</button>
+        </form>
+        <a href="{{ url_for('view_students') }}" class="btn btn-secondary mt-3 w-100">Back to Students</a>
+    </div>
+
+    {% if summary %}
+    <div class="card shadow-sm p-4">
+        <h5 class="text-primary mb-3">Upload Summary</h5>
+
+        {% if summary.added %}
+        <p>
+            <a class="btn btn-success w-100" data-bs-toggle="collapse" href="#addedStudents" role="button" aria-expanded="false" aria-controls="addedStudents">
+                Added Students ({{ summary.added|length }})
+            </a>
+        </p>
+        <div class="collapse" id="addedStudents">
+            <ul class="list-group mb-3">
+                {% for student in summary.added %}
+                <li class="list-group-item list-group-item-success">{{ student }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if summary.skipped %}
+        <p>
+            <a class="btn btn-warning w-100" data-bs-toggle="collapse" href="#skippedStudents" role="button" aria-expanded="false" aria-controls="skippedStudents">
+                Skipped (Duplicates) ({{ summary.skipped|length }})
+            </a>
+        </p>
+        <div class="collapse" id="skippedStudents">
+            <ul class="list-group">
+                {% for student in summary.skipped %}
+                <li class="list-group-item list-group-item-warning">{{ student }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

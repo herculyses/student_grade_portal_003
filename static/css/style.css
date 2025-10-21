@@ -1,0 +1,74 @@
+/* style.css */
+
+/* Table hover effect */
+.table-hover tbody tr:hover {
+    background-color: #f0f8ff; /* light blue highlight */
+    transition: background-color 0.3s ease;
+}
+
+/* Delete button hover */
+#delete-selected {
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#delete-selected:hover {
+    background-color: #dc3545; /* Bootstrap danger darker red */
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* Add Student & Upload CSV hover */
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    transform: scale(1.03);
+}
+
+.btn-success:hover {
+    background-color: #198754;
+    transform: scale(1.03);
+}
+
+/* Table styling */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Flash messages */
+.flash {
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: 500;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+/* Back to Dashboard button */
+.btn-secondary:hover {
+    background-color: #6c757d;
+    transform: scale(1.03);
+}
+
+/* Smooth modal animation */
+.modal.fade .modal-dialog {
+  transform: translateY(-20px);
+  transition: transform 0.3s ease-out;
+}
+.modal.show .modal-dialog {
+  transform: translateY(0);
+}
+
+/* Optional: subtle flash fade */
+.flash {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.table {
+  margin-top: 15px;
+}
+
+
