@@ -9,6 +9,7 @@ from functools import wraps
 import os, csv
 from datetime import datetime
 import time
+from flask import get_flashed_messages
 
 # --- Flask Setup ---
 app = Flask(__name__)
@@ -138,29 +139,45 @@ def logout():
 @login_required()
 def change_password():
     user = User.query.get(session['user_id'])
-    form = ChangePasswordForm()
-    if form.validate_on_submit():
-        if not check_password_hash(user.password, form.current_password.data):
+
+    if request.method == 'POST':
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        # Validate current password
+        if not check_password_hash(user.password, current_password):
             flash("❌ Current password is incorrect.", "danger")
             return redirect(url_for('change_password'))
-        if form.new_password.data != form.confirm_password.data:
+
+        # Ensure new password matches confirmation
+        if new_password != confirm_password:
             flash("⚠️ New passwords do not match.", "warning")
             return redirect(url_for('change_password'))
 
-        user.password = generate_password_hash(form.new_password.data)
+        # Ensure new password isn't same as current
+        if check_password_hash(user.password, new_password):
+            flash("⚠️ New password must be different from the current one.", "warning")
+            return redirect(url_for('change_password'))
+
+        # Update password securely
+        user.password = generate_password_hash(new_password)
         db.session.commit()
-        add_log(user.username, 'Changed password')
-        time.sleep(5)
-        flash("✅ Password changed successfully!", "success")
 
-        if user.role == 'Admin':
-            return redirect(url_for('dashboard_admin'))
-        elif user.role == 'Instructor':
-            return redirect(url_for('dashboard_instructor'))
-        else:
-            return redirect(url_for('dashboard_student'))
+        # Log the event
+        add_log(
+            user.username,
+            f"Changed their password (Role: {user.role})"
+        )
+        time.sleep(4)
 
-    return render_template('change_password.html', form=form)
+        # Force logout for security
+        session.clear()
+        flash("✅ Nautro na imuhang password! Pwede na ta manlupad.", "success")
+        return redirect(url_for('login'))
+
+    return render_template('change_password.html')
+
 
 # Admin Dashboard
 @app.route('/dashboard/admin')
