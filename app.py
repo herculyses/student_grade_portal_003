@@ -721,6 +721,13 @@ def upload_students():
                             add_log(username, f"CSV upload warning ({filename}): {msg}")
                             continue
 
+                        # Skip rows where subject accidentally equals the student's name
+                        if subject.lower() == name.lower() or subject.lower() in name.lower():
+                            msg = f"Row {row_num}: skipped because subject matches student name ({name})."
+                            skipped_students.append(f"{student_id} - {name} ({subject})")
+                            add_log(username, f"CSV upload skipped ({filename}): {msg}")
+                            continue
+
                         # Prepare grade-related fields
                         field_updates = {
                             'midterm_grade': safe_str(row.get('midterm_grade')),
@@ -807,16 +814,24 @@ def upload_students():
 def download_csv():
     students = Student.query.all()
 
-    def clean(value, is_numeric=False):
+    def clean(value):
         """
-        Convert None or invalid values to blank (for strings) or 0 (for numeric fields).
+        Convert None or '#N/A' to blank string.
         """
-        if value is None or value == '#N/A' or (is_numeric and value == ''):
-            return 0.0 if is_numeric else ''
-        return value
+        if value is None or str(value).strip() == '#N/A':
+            return ''
+        return str(value).strip()
+
+    def quote(value):
+        """
+        Wrap all values in double quotes and escape internal quotes.
+        """
+        value = clean(value)
+        value = value.replace('"', '""')  # escape internal quotes
+        return f'"{value}"'
 
     def generate():
-        # Header row — must exactly match your upload format
+        # Header row (matches your upload format)
         yield (
             "student_id,name,subject,"
             "quiz1,quiz2,quiz3,quiz4,quiz5,quiz6,quiz7,quiz8,"
@@ -827,28 +842,28 @@ def download_csv():
         )
 
         for s in students:
-            quizzes = [clean(getattr(s, f'quiz{i}', 0), is_numeric=True) for i in range(1, 9)]
+            quizzes = [quote(getattr(s, f'quiz{i}', '')) for i in range(1, 9)]
             row = [
-                clean(s.student_id),
-                clean(s.name),
-                clean(s.subject),
+                quote(s.student_id),
+                quote(s.name),
+                quote(s.subject),
                 *quizzes,
-                clean(s.midterm_exam, is_numeric=True),
-                clean(s.finals_exam, is_numeric=True),
-                clean(s.midterm_grade, is_numeric=True),
-                clean(s.midterm_remarks),
-                clean(s.finals_grade, is_numeric=True),
-                clean(s.finals_remarks),
-                clean(s.overall_grade, is_numeric=True),
-                clean(s.overall_remarks)
+                quote(s.midterm_exam),
+                quote(s.finals_exam),
+                quote(s.midterm_grade),
+                quote(s.midterm_remarks),
+                quote(s.finals_grade),
+                quote(s.finals_remarks),
+                quote(s.overall_grade),
+                quote(s.overall_remarks)
             ]
-            yield ",".join(map(str, row)) + "\n"
+            yield ",".join(row) + "\n"
 
     return Response(
         generate(),
         mimetype="text/csv",
         headers={"Content-Disposition": "attachment;filename=students.csv"},
-        content_type='text/csv; charset=latin-1'
+        content_type='text/csv; charset=utf-8'
     )
 
 # --- Initialize Database ---
