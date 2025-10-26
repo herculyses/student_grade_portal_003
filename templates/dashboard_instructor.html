@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Instructor Dashboard - Student Grade Portal</title>
 
   <!-- Bootstrap CSS -->
@@ -21,12 +21,17 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_students') }}">View Students</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
           <li class="nav-item">
-            <a class="nav-link btn btn-warning text-white ms-2" href="{{ url_for('change_password') }}">Change Password</a>
+            <a class="nav-link" href="{{ url_for('view_students') }}" data-bs-toggle="tooltip" title="View all students">View Students</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}" data-bs-toggle="tooltip" title="Logout">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-warning text-white ms-2" href="{{ url_for('change_password') }}" data-bs-toggle="tooltip" title="Change password">Change Password</a>
           </li>
         </ul>
       </div>
@@ -48,18 +53,46 @@
     <!-- Students Section -->
     <form method="POST" action="{{ url_for('bulk_delete_students') }}" id="bulk-delete-form">
       <div class="card shadow-sm p-3 mb-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
           <h4 class="card-title mb-0">Students List</h4>
+
           <div class="d-flex gap-2 flex-wrap">
-            <input type="text" id="studentSearch" class="form-control form-control-sm"
-                   style="width:200px;" placeholder="Search Students">
-            <a href="{{ url_for('upload_students') }}" class="btn btn-success">Upload CSV</a>
-            <a href="{{ url_for('add_student') }}" class="btn btn-primary">Add Student</a>
-            <a href="{{ url_for('download_csv') }}" class="btn btn-info text-white">
+            <input
+              type="text"
+              id="studentSearch"
+              class="form-control form-control-sm"
+              style="width:200px;"
+              placeholder="Search Students"
+              data-bs-toggle="tooltip"
+              title="Search students by name, ID, or subject"
+            >
+
+            <a href="{{ url_for('upload_students') }}" class="btn btn-success" data-bs-toggle="tooltip" title="Upload a CSV file of students">
+              <i class="bi bi-upload"></i> Upload CSV
+            </a>
+
+            <a href="{{ url_for('add_student') }}" class="btn btn-primary" data-bs-toggle="tooltip" title="Add a new student manually">
+              <i class="bi bi-person-plus"></i> Add Student
+            </a>
+
+            <a href="{{ url_for('download_csv') }}" class="btn btn-info text-white" data-bs-toggle="tooltip" title="Download student list as CSV">
               <i class="bi bi-download"></i> Download CSV
             </a>
-            <button type="button" class="btn btn-danger" id="delete-selected" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-              Delete Selected
+
+            <a href="{{ url_for('download_db') }}" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="Download entire database backup">
+              <i class="bi bi-database-down"></i> Download Database
+            </a>
+
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="delete-selected"
+              data-bs-toggle="modal"
+              data-bs-target="#confirmDeleteModal"
+              data-bs-toggle="tooltip"
+              title="Delete selected students"
+            >
+              <i class="bi bi-trash3"></i> Delete Selected
             </button>
           </div>
         </div>
@@ -68,23 +101,24 @@
           <table id="studentsTable" class="table table-bordered table-hover align-middle">
             <thead class="table-light">
               <tr>
-                <th><input type="checkbox" id="select-all"></th>
-                <th onclick="sortTable(1,'student_id')">Student ID <i class="bi bi-arrow-down-up" id="arrow-student_id"></i></th>
-                <th onclick="sortTable(2,'name')">Name <i class="bi bi-arrow-down-up" id="arrow-name"></i></th>
-                <th onclick="sortTable(3,'subject')">Subject <i class="bi bi-arrow-down-up" id="arrow-subject"></i></th>
-                <th onclick="sortTable(4,'midterm_grade')">Midterm Grade <i class="bi bi-arrow-down-up" id="arrow-midterm_grade"></i></th>
+                <th><input type="checkbox" id="select-all" data-bs-toggle="tooltip" title="Select all"></th>
+                <th onclick="sortTable(1,'student_id')" style="cursor:pointer" data-bs-toggle="tooltip" title="Sort by Student ID">Student ID <i class="bi bi-arrow-down-up" id="arrow-student_id"></i></th>
+                <th onclick="sortTable(2,'name')" style="cursor:pointer" data-bs-toggle="tooltip" title="Sort by Name">Name <i class="bi bi-arrow-down-up" id="arrow-name"></i></th>
+                <th onclick="sortTable(3,'subject')" style="cursor:pointer" data-bs-toggle="tooltip" title="Sort by Subject">Subject <i class="bi bi-arrow-down-up" id="arrow-subject"></i></th>
+                <th onclick="sortTable(4,'midterm_grade')" style="cursor:pointer" data-bs-toggle="tooltip" title="Sort by Midterm Grade">Midterm Grade <i class="bi bi-arrow-down-up" id="arrow-midterm_grade"></i></th>
                 <th>Midterm Remarks</th>
-                <th onclick="sortTable(6,'finals_grade')">Finals Grade <i class="bi bi-arrow-down-up" id="arrow-finals_grade"></i></th>
+                <th onclick="sortTable(6,'finals_grade')" style="cursor:pointer" data-bs-toggle="tooltip" title="Sort by Finals Grade">Finals Grade <i class="bi bi-arrow-down-up" id="arrow-finals_grade"></i></th>
                 <th>Finals Remarks</th>
-                <th onclick="sortTable(8,'overall_grade')">Overall Grade <i class="bi bi-arrow-down-up" id="arrow-overall_grade"></i></th>
+                <th onclick="sortTable(8,'overall_grade')" style="cursor:pointer" data-bs-toggle="tooltip" title="Sort by Overall Grade">Overall Grade <i class="bi bi-arrow-down-up" id="arrow-overall_grade"></i></th>
                 <th>Overall Remarks</th>
                 <th>Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {% for s in students %}
               <tr>
-                <td><input type="checkbox" name="student_ids" value="{{ s.student_id }}"></td>
+                <td><input type="checkbox" name="student_ids" value="{{ s.student_id }}" data-bs-toggle="tooltip" title="Select student {{ s.student_id }}"></td>
                 <td>{{ s.student_id }}</td>
                 <td>{{ s.name }}</td>
                 <td>{{ s.subject }}</td>
@@ -94,13 +128,17 @@
                 <td>{{ s.finals_remarks }}</td>
                 <td>{{ s.overall_grade }}</td>
                 <td>{{ s.overall_remarks }}</td>
-                <td>
-                  <a href="{{ url_for('edit_student', student_id=s.student_id, subject=s.subject) }}" class="btn btn-sm btn-warning">Edit</a>
-                  <a href="{{ url_for('student_grades', student_id=s.student_id) }}" class="btn btn-sm btn-success">See Grade</a>
-                  <a href="{{ url_for('student_performance', student_id=s.student_id) }}" class="btn btn-sm btn-info text-white">Performance</a>
+                <td class="text-center">
+                  <a href="{{ url_for('edit_student', student_id=s.student_id, subject=s.subject) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit student details"><i class="bi bi-pencil-square"></i></a>
+
+                  <a href="{{ url_for('student_grades', student_id=s.student_id) }}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="View student's grades"><i class="bi bi-eye"></i></a>
+
+                  <a href="{{ url_for('student_performance', student_id=s.student_id) }}" class="btn btn-sm btn-info text-white" data-bs-toggle="tooltip" title="View student's performance"><i class="bi bi-bar-chart-line"></i></a>
+
                   <form action="{{ url_for('delete_student', student_id=s.student_id) }}" method="POST" style="display:inline;">
-                    <button type="submit" class="btn btn-sm btn-danger"
-                            onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
+                    <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete this student" onclick="return confirm('Are you sure you want to delete this student?')">
+                      <i class="bi bi-trash"></i>
+                    </button>
                   </form>
                 </td>
               </tr>
@@ -133,17 +171,17 @@
         </div>
       </div>
     </form>
-
   </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Custom JS -->
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
   <script>
   document.addEventListener("DOMContentLoaded", function() {
+    // Enable tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+
     // Flash messages auto-hide
     document.querySelectorAll(".flash").forEach(flash => {
       setTimeout(() => {
@@ -156,17 +194,20 @@
 
     // Search functionality
     const searchInput = document.getElementById('studentSearch');
-    searchInput.addEventListener('keyup', function() {
-      const filter = this.value.toLowerCase();
-      document.querySelectorAll('#studentsTable tbody tr').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(filter) ? '' : 'none';
+    if (searchInput) {
+      searchInput.addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase();
+        document.querySelectorAll('#studentsTable tbody tr').forEach(row => {
+          row.style.display = row.textContent.toLowerCase().includes(filter) ? '' : 'none';
+        });
       });
-    });
+    }
 
-    // Sort functionality with arrow icons
+    // Sort functionality
     const sortDirections = {};
     window.sortTable = function(colIndex, colKey) {
       const table = document.getElementById("studentsTable");
+      if (!table) return;
       const rows = Array.from(table.tBodies[0].rows);
       let dir = sortDirections[colKey] === "asc" ? "desc" : "asc";
       sortDirections[colKey] = dir;
@@ -181,9 +222,9 @@
       });
 
       rows.forEach(row => table.tBodies[0].appendChild(row));
-
       document.querySelectorAll('th i').forEach(i => i.className = "bi bi-arrow-down-up");
-      document.getElementById(`arrow-${colKey}`).className = dir === "asc" ? "bi bi-arrow-up" : "bi bi-arrow-down";
+      const arrow = document.getElementById(`arrow-${colKey}`);
+      if (arrow) arrow.className = dir === "asc" ? "bi bi-arrow-up" : "bi bi-arrow-down";
     };
 
     // Bulk delete handling
@@ -194,16 +235,17 @@
     const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
     const bulkForm = document.getElementById('bulk-delete-form');
 
-    selectAll.addEventListener('click', () => {
-      checkboxes.forEach(cb => cb.checked = selectAll.checked);
-      updateDeleteButtonText();
-    });
-
+    if (selectAll) {
+      selectAll.addEventListener('click', () => {
+        checkboxes.forEach(cb => cb.checked = selectAll.checked);
+        updateDeleteButtonText();
+      });
+    }
     checkboxes.forEach(cb => cb.addEventListener('change', updateDeleteButtonText));
 
     function updateDeleteButtonText() {
       const count = document.querySelectorAll('input[name="student_ids"]:checked').length;
-      deleteBtn.textContent = count > 0 ? `Delete Selected (${count})` : 'Delete Selected';
+      deleteBtn.innerHTML = count > 0 ? `<i class="bi bi-trash3"></i> Delete Selected (${count})` : '<i class="bi bi-trash3"></i> Delete Selected';
     }
 
     deleteBtn.addEventListener('click', function() {
@@ -220,6 +262,5 @@
     confirmDeleteBtn.addEventListener('click', () => bulkForm.submit());
   });
   </script>
-
 </body>
 </html>

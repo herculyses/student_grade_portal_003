@@ -17,19 +17,19 @@
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Admin Dashboard</a>
+      <a class="navbar-brand fw-bold" href="#">Admin Dashboard</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('create_user') }}">Create User</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_students') }}">View Students</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_instructors') }}">View Instructors</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_logs') }}">Logs</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('create_user') }}" data-bs-toggle="tooltip" title="Create new user"><i class="bi bi-person-plus"></i> Create User</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_students') }}" data-bs-toggle="tooltip" title="View all students"><i class="bi bi-people"></i> View Students</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_instructors') }}" data-bs-toggle="tooltip" title="View all instructors"><i class="bi bi-person-badge"></i> View Instructors</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_logs') }}" data-bs-toggle="tooltip" title="View system activity logs"><i class="bi bi-journal-text"></i> Logs</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}" data-bs-toggle="tooltip" title="Logout of your account"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
           <li class="nav-item">
-            <a class="nav-link btn btn-warning text-white ms-2" href="{{ url_for('change_password') }}">Change Password</a>
+            <a class="btn btn-warning text-white ms-2" href="{{ url_for('change_password') }}" data-bs-toggle="tooltip" title="Change your password"><i class="bi bi-key"></i> Change Password</a>
           </li>
         </ul>
       </div>
@@ -50,32 +50,31 @@
 
     <!-- Students Section -->
     <div class="card shadow-sm p-3 mb-4">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="card-title mb-0">Students List</h4>
-        <div>
-          <!-- Search Input -->
-          <input type="text" id="studentSearch" class="form-control form-control-sm d-inline-block me-2"
-                 style="width:200px;" placeholder="Search Students">
-          <a href="{{ url_for('upload_students') }}" class="btn btn-success">Upload CSV</a>
-          <a href="{{ url_for('add_student') }}" class="btn btn-primary ms-2">Add Student</a>
-          <a href="{{ url_for('download_csv') }}" class="btn btn-info text-white ms-2">
-            <i class="bi bi-download"></i> Download CSV
-          </a>
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+        <h4 class="card-title mb-2 mb-md-0">Students List</h4>
+        <div class="d-flex flex-wrap align-items-center gap-2">
+          <!-- Search -->
+          <input type="text" id="studentSearch" class="form-control form-control-sm" placeholder="Search Students" style="width:200px;" data-bs-toggle="tooltip" title="Search by name, ID, or subject">
+          <!-- Buttons -->
+          <a href="{{ url_for('upload_students') }}" class="btn btn-success" data-bs-toggle="tooltip" title="Upload students from CSV file"><i class="bi bi-upload"></i> Upload CSV</a>
+          <a href="{{ url_for('add_student') }}" class="btn btn-primary" data-bs-toggle="tooltip" title="Add a new student manually"><i class="bi bi-person-add"></i> Add Student</a>
+          <a href="{{ url_for('download_csv') }}" class="btn btn-info text-white" data-bs-toggle="tooltip" title="Download all student data as CSV"><i class="bi bi-download"></i> Download CSV</a>
+          <a href="{{ url_for('download_db') }}" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="Download complete database file"><i class="bi bi-database-down"></i> Download Database</a>
         </div>
       </div>
 
       <div class="table-responsive">
         <table id="studentsTable" class="table table-bordered table-hover align-middle">
-          <thead class="table-light">
+          <thead class="table-light text-center">
             <tr>
-              <th onclick="sortTable(0,'student_id')">Student ID <i class="bi bi-arrow-down-up" id="arrow-student_id"></i></th>
-              <th onclick="sortTable(1,'name')">Name <i class="bi bi-arrow-down-up" id="arrow-name"></i></th>
-              <th onclick="sortTable(2,'subject')">Subject <i class="bi bi-arrow-down-up" id="arrow-subject"></i></th>
-              <th onclick="sortTable(3,'midterm_grade')">Midterm Grade <i class="bi bi-arrow-down-up" id="arrow-midterm_grade"></i></th>
+              <th onclick="sortTable(0,'student_id')" data-bs-toggle="tooltip" title="Sort by Student ID">Student ID <i class="bi bi-arrow-down-up" id="arrow-student_id"></i></th>
+              <th onclick="sortTable(1,'name')" data-bs-toggle="tooltip" title="Sort by Name">Name <i class="bi bi-arrow-down-up" id="arrow-name"></i></th>
+              <th onclick="sortTable(2,'subject')" data-bs-toggle="tooltip" title="Sort by Subject">Subject <i class="bi bi-arrow-down-up" id="arrow-subject"></i></th>
+              <th onclick="sortTable(3,'midterm_grade')" data-bs-toggle="tooltip" title="Sort by Midterm Grade">Midterm Grade <i class="bi bi-arrow-down-up" id="arrow-midterm_grade"></i></th>
               <th>Midterm Remarks</th>
-              <th onclick="sortTable(5,'finals_grade')">Finals Grade <i class="bi bi-arrow-down-up" id="arrow-finals_grade"></i></th>
+              <th onclick="sortTable(5,'finals_grade')" data-bs-toggle="tooltip" title="Sort by Finals Grade">Finals Grade <i class="bi bi-arrow-down-up" id="arrow-finals_grade"></i></th>
               <th>Finals Remarks</th>
-              <th onclick="sortTable(7,'overall_grade')">Overall Grade <i class="bi bi-arrow-down-up" id="arrow-overall_grade"></i></th>
+              <th onclick="sortTable(7,'overall_grade')" data-bs-toggle="tooltip" title="Sort by Overall Grade">Overall Grade <i class="bi bi-arrow-down-up" id="arrow-overall_grade"></i></th>
               <th>Overall Remarks</th>
               <th>Actions</th>
             </tr>
@@ -92,20 +91,18 @@
               <td>{{ s.finals_remarks }}</td>
               <td>{{ s.overall_grade }}</td>
               <td>{{ s.overall_remarks }}</td>
-              <td>
-                <a href="{{ url_for('edit_student', student_id=s.student_id, subject=s.subject) }}" class="btn btn-sm btn-warning">Edit</a>
-                <a href="{{ url_for('student_grades', student_id=s.student_id) }}" class="btn btn-sm btn-success">See Grade</a>
-                <a href="{{ url_for('student_performance', student_id=s.student_id) }}" class="btn btn-sm btn-info text-white">Performance</a>
+              <td class="text-center">
+                <a href="{{ url_for('edit_student', student_id=s.student_id, subject=s.subject) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit student details"><i class="bi bi-pencil"></i></a>
+                <a href="{{ url_for('student_grades', student_id=s.student_id) }}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" title="View student grades"><i class="bi bi-card-checklist"></i></a>
+                <a href="{{ url_for('student_performance', student_id=s.student_id) }}" class="btn btn-sm btn-info text-white" data-bs-toggle="tooltip" title="View performance chart"><i class="bi bi-graph-up"></i></a>
                 <form action="{{ url_for('delete_student', student_id=s.student_id) }}" method="POST" style="display:inline;">
-                  <button type="submit" class="btn btn-sm btn-danger"
-                          onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
+                  <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete this student"
+                          onclick="return confirm('Are you sure you want to delete this student?')"><i class="bi bi-trash"></i></button>
                 </form>
               </td>
             </tr>
             {% else %}
-            <tr>
-              <td colspan="10" class="text-center">No students found.</td>
-            </tr>
+            <tr><td colspan="10" class="text-center">No students found.</td></tr>
             {% endfor %}
           </tbody>
         </table>
@@ -116,11 +113,11 @@
     <div class="card shadow-sm p-3 mb-4">
       <h4 class="card-title mb-3">Instructors List</h4>
       <div class="mb-3">
-        <a href="{{ url_for('add_instructor') }}" class="btn btn-success">Add Instructor</a>
+        <a href="{{ url_for('add_instructor') }}" class="btn btn-success" data-bs-toggle="tooltip" title="Add a new instructor"><i class="bi bi-person-plus"></i> Add Instructor</a>
       </div>
       <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
-          <thead class="table-light">
+          <thead class="table-light text-center">
             <tr>
               <th>ID</th>
               <th>Username</th>
@@ -134,18 +131,16 @@
               <td>{{ instructor.id }}</td>
               <td>{{ instructor.username }}</td>
               <td>{{ instructor.role }}</td>
-              <td>
-                <a href="{{ url_for('edit_instructor', id=instructor.id) }}" class="btn btn-sm btn-warning">Edit</a>
+              <td class="text-center">
+                <a href="{{ url_for('edit_instructor', id=instructor.id) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit instructor details"><i class="bi bi-pencil"></i></a>
                 <form action="{{ url_for('delete_instructor', id=instructor.id) }}" method="POST" style="display:inline;">
-                  <button type="submit" class="btn btn-sm btn-danger"
-                          onclick="return confirm('Are you sure you want to delete this instructor?')">Delete</button>
+                  <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete this instructor"
+                          onclick="return confirm('Are you sure you want to delete this instructor?')"><i class="bi bi-trash"></i></button>
                 </form>
               </td>
             </tr>
             {% else %}
-            <tr>
-              <td colspan="4" class="text-center">No instructors found.</td>
-            </tr>
+            <tr><td colspan="4" class="text-center">No instructors found.</td></tr>
             {% endfor %}
           </tbody>
         </table>
@@ -153,11 +148,11 @@
     </div>
 
     <!-- Logs Section -->
-    <div class="card shadow-sm p-3">
+    <div class="card shadow-sm p-3 mb-5">
       <h4 class="card-title mb-3">Activity Logs</h4>
       <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
-          <thead class="table-light">
+          <thead class="table-light text-center">
             <tr>
               <th>ID</th>
               <th>User</th>
@@ -174,26 +169,26 @@
               <td>{{ log.timestamp }}</td>
             </tr>
             {% else %}
-            <tr>
-              <td colspan="4" class="text-center">No logs found.</td>
-            </tr>
+            <tr><td colspan="4" class="text-center">No logs found.</td></tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
-
   </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom JS -->
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
-  <!-- JS for Flash, Search, Sorting -->
+  <!-- Tooltip, Flash, Search, Sort -->
   <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Flash messages auto-hide
+  document.addEventListener("DOMContentLoaded", () => {
+    // Enable Bootstrap tooltips
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el));
+
+    // Flash auto-hide
     document.querySelectorAll(".flash").forEach(flash => {
       setTimeout(() => {
         flash.style.transition = "opacity 0.5s ease, transform 0.5s ease";
@@ -203,7 +198,7 @@
       }, 3000);
     });
 
-    // Search functionality
+    // Search
     const searchInput = document.getElementById('studentSearch');
     searchInput.addEventListener('keyup', function() {
       const filter = this.value.toLowerCase();
@@ -213,7 +208,7 @@
     });
   });
 
-  // Sort functionality with arrow icons
+  // Sort
   const sortDirections = {};
   function sortTable(colIndex, colKey) {
     const table = document.getElementById("studentsTable");
@@ -224,21 +219,16 @@
     rows.sort((a, b) => {
       let x = a.cells[colIndex].textContent.trim();
       let y = b.cells[colIndex].textContent.trim();
-
       let xNum = parseFloat(x), yNum = parseFloat(y);
       if (!isNaN(xNum) && !isNaN(yNum)) { x = xNum; y = yNum; }
       else { x = x.toLowerCase(); y = y.toLowerCase(); }
-
       return dir === "asc" ? (x > y ? 1 : x < y ? -1 : 0) : (x < y ? 1 : x > y ? -1 : 0);
     });
 
     rows.forEach(row => table.tBodies[0].appendChild(row));
-
-    // Update arrows
     document.querySelectorAll('th i').forEach(i => i.className = "bi bi-arrow-down-up");
     document.getElementById(`arrow-${colKey}`).className = dir === "asc" ? "bi bi-arrow-up" : "bi bi-arrow-down";
   }
   </script>
-
 </body>
 </html>

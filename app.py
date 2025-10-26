@@ -301,7 +301,7 @@ def dashboard_student():
 
 # Download app.db (Admin only)
 @app.route('/dashboard/admin/download_db')
-@login_required(role='Admin')
+@login_required(role=['Admin','Instructor'])
 def download_db():
     if not os.path.exists(db_path):
         flash("❌ Database file not found!", "danger")
