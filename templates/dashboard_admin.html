@@ -1,209 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - Student Grade Portal</title>
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Custom CSS -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Student Grade Portal</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="bg-light">
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Admin Dashboard</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('create_user') }}">Create User</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('view_students') }}">View Students</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('view_instructors') }}">View Instructors</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('view_logs') }}">Logs</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-warning text-white ms-2" href="{{ url_for('change_password') }}">Change Password</a>
-                </li>
-            </ul>
-        </div>
+      <a class="navbar-brand" href="#">Admin Dashboard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('create_user') }}">Create User</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_students') }}">View Students</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_instructors') }}">View Instructors</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('view_logs') }}">Logs</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-warning text-white ms-2" href="{{ url_for('change_password') }}">Change Password</a>
+          </li>
+        </ul>
+      </div>
     </div>
-</nav>
+  </nav>
 
-<!-- Main Container -->
-<div class="container mt-4">
+  <!-- Main Container -->
+  <div class="container mt-4">
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
-          <div class="alert alert-{{ category }} flash" role="alert">
-            {{ message }}
-          </div>
+          <div class="alert alert-{{ category }} flash" role="alert">{{ message }}</div>
         {% endfor %}
       {% endif %}
     {% endwith %}
 
     <!-- Students Section -->
     <div class="card shadow-sm p-3 mb-4">
-        <h4 class="card-title mb-3">Students List</h4>
-
-        <div class="mb-3">
-            <a href="{{ url_for('upload_students') }}" class="btn btn-success">Upload CSV</a>
-            <a href="{{ url_for('add_student') }}" class="btn btn-primary ms-2">Add Student</a>
-	    <a href="{{ url_for('download_db') }}" class="btn btn-warning text-white ms-2">⬇️ Download DB</a>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="card-title mb-0">Students List</h4>
+        <div>
+          <!-- Search Input -->
+          <input type="text" id="studentSearch" class="form-control form-control-sm d-inline-block me-2"
+                 style="width:200px;" placeholder="Search Students">
+          <a href="{{ url_for('upload_students') }}" class="btn btn-success">Upload CSV</a>
+          <a href="{{ url_for('add_student') }}" class="btn btn-primary ms-2">Add Student</a>
+          <a href="{{ url_for('download_csv') }}" class="btn btn-info text-white ms-2">
+            <i class="bi bi-download"></i> Download CSV
+          </a>
         </div>
+      </div>
 
-        <form action="{{ url_for('bulk_delete_students') }}" method="POST">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th><input type="checkbox" id="select_all"></th>
-                        <th>ID</th>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                        <th>Subject</th>
-                        <th>Grade</th>
-                        <th>Remarks</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for student in students %}
-                    <tr>
-                        <td><input type="checkbox" name="student_ids" value="{{ student.id }}"></td>
-                        <td>{{ student.id }}</td>
-                        <td>{{ student.student_id }}</td>
-                        <td>{{ student.name }}</td>
-                        <td>{{ student.subject }}</td>
-                        <td>{{ student.grade }}</td>
-                        <td>{{ student.remarks }}</td>
-                        <td>
-                            <a href="{{ url_for('edit_student', student_id=student.id) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ url_for('delete_student', student_id=student.id) }}" method="POST" style="display:inline;">
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="8" class="text-center">No students found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <button type="submit" class="btn btn-danger mt-2" onclick="return confirm('Are you sure you want to delete selected students?')">Delete Selected</button>
-        </form>
+      <div class="table-responsive">
+        <table id="studentsTable" class="table table-bordered table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th onclick="sortTable(0,'student_id')">Student ID <i class="bi bi-arrow-down-up" id="arrow-student_id"></i></th>
+              <th onclick="sortTable(1,'name')">Name <i class="bi bi-arrow-down-up" id="arrow-name"></i></th>
+              <th onclick="sortTable(2,'subject')">Subject <i class="bi bi-arrow-down-up" id="arrow-subject"></i></th>
+              <th onclick="sortTable(3,'midterm_grade')">Midterm Grade <i class="bi bi-arrow-down-up" id="arrow-midterm_grade"></i></th>
+              <th>Midterm Remarks</th>
+              <th onclick="sortTable(5,'finals_grade')">Finals Grade <i class="bi bi-arrow-down-up" id="arrow-finals_grade"></i></th>
+              <th>Finals Remarks</th>
+              <th onclick="sortTable(7,'overall_grade')">Overall Grade <i class="bi bi-arrow-down-up" id="arrow-overall_grade"></i></th>
+              <th>Overall Remarks</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in students %}
+            <tr>
+              <td>{{ s.student_id }}</td>
+              <td>{{ s.name }}</td>
+              <td>{{ s.subject }}</td>
+              <td>{{ s.midterm_grade }}</td>
+              <td>{{ s.midterm_remarks }}</td>
+              <td>{{ s.finals_grade }}</td>
+              <td>{{ s.finals_remarks }}</td>
+              <td>{{ s.overall_grade }}</td>
+              <td>{{ s.overall_remarks }}</td>
+              <td>
+                <a href="{{ url_for('edit_student', student_id=s.student_id, subject=s.subject) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ url_for('student_grades', student_id=s.student_id) }}" class="btn btn-sm btn-success">See Grade</a>
+                <a href="{{ url_for('student_performance', student_id=s.student_id) }}" class="btn btn-sm btn-info text-white">Performance</a>
+                <form action="{{ url_for('delete_student', student_id=s.student_id) }}" method="POST" style="display:inline;">
+                  <button type="submit" class="btn btn-sm btn-danger"
+                          onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="10" class="text-center">No students found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Instructors Section -->
     <div class="card shadow-sm p-3 mb-4">
-        <h4 class="card-title mb-3">Instructors List</h4>
-
-        <div class="mb-3">
-            <a href="{{ url_for('add_instructor') }}" class="btn btn-success">Add Instructor</a>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for instructor in instructors %}
-                    <tr>
-                        <td>{{ instructor.id }}</td>
-                        <td>{{ instructor.username }}</td>
-                        <td>{{ instructor.role }}</td>
-                        <td>
-                            <a href="{{ url_for('edit_instructor', id=instructor.id) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ url_for('delete_instructor', id=instructor.id) }}" method="POST" style="display:inline;">
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this instructor?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="4" class="text-center">No instructors found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+      <h4 class="card-title mb-3">Instructors List</h4>
+      <div class="mb-3">
+        <a href="{{ url_for('add_instructor') }}" class="btn btn-success">Add Instructor</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for instructor in instructors %}
+            <tr>
+              <td>{{ instructor.id }}</td>
+              <td>{{ instructor.username }}</td>
+              <td>{{ instructor.role }}</td>
+              <td>
+                <a href="{{ url_for('edit_instructor', id=instructor.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form action="{{ url_for('delete_instructor', id=instructor.id) }}" method="POST" style="display:inline;">
+                  <button type="submit" class="btn btn-sm btn-danger"
+                          onclick="return confirm('Are you sure you want to delete this instructor?')">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="text-center">No instructors found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Logs Section -->
     <div class="card shadow-sm p-3">
-        <h4 class="card-title mb-3">Activity Logs</h4>
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>User</th>
-                        <th>Action</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for log in logs %}
-                    <tr>
-                        <td>{{ log.id }}</td>
-                        <td>{{ log.user }}</td>
-                        <td>{{ log.action }}</td>
-                        <td>{{ log.timestamp }}</td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="4" class="text-center">No logs found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+      <h4 class="card-title mb-3">Activity Logs</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Action</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for log in logs %}
+            <tr>
+              <td>{{ log.id }}</td>
+              <td>{{ log.user }}</td>
+              <td>{{ log.action }}</td>
+              <td>{{ log.timestamp }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="text-center">No logs found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
 
-</div>
+  </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Custom JS -->
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
-<script>
-// Auto-hide flash messages
-document.addEventListener("DOMContentLoaded", function() {
-    const flashes = document.querySelectorAll(".flash");
-    flashes.forEach(flash => {
-        setTimeout(() => {
-            flash.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-            flash.style.opacity = "0";
-            flash.style.transform = "translateY(-10px)";
-            setTimeout(() => flash.remove(), 500);
-        }, 3000);
+  <!-- JS for Flash, Search, Sorting -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Flash messages auto-hide
+    document.querySelectorAll(".flash").forEach(flash => {
+      setTimeout(() => {
+        flash.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+        flash.style.opacity = "0";
+        flash.style.transform = "translateY(-10px)";
+        setTimeout(() => flash.remove(), 500);
+      }, 3000);
     });
-});
 
-// Select/Deselect all checkboxes
-document.addEventListener("DOMContentLoaded", function() {
-    const selectAll = document.getElementById('select_all');
-    const checkboxes = document.querySelectorAll('input[name="student_ids"]');
-    selectAll.addEventListener('change', function() {
-        checkboxes.forEach(cb => cb.checked = selectAll.checked);
+    // Search functionality
+    const searchInput = document.getElementById('studentSearch');
+    searchInput.addEventListener('keyup', function() {
+      const filter = this.value.toLowerCase();
+      document.querySelectorAll('#studentsTable tbody tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(filter) ? '' : 'none';
+      });
     });
-});
-</script>
+  });
+
+  // Sort functionality with arrow icons
+  const sortDirections = {};
+  function sortTable(colIndex, colKey) {
+    const table = document.getElementById("studentsTable");
+    const rows = Array.from(table.tBodies[0].rows);
+    let dir = sortDirections[colKey] === "asc" ? "desc" : "asc";
+    sortDirections[colKey] = dir;
+
+    rows.sort((a, b) => {
+      let x = a.cells[colIndex].textContent.trim();
+      let y = b.cells[colIndex].textContent.trim();
+
+      let xNum = parseFloat(x), yNum = parseFloat(y);
+      if (!isNaN(xNum) && !isNaN(yNum)) { x = xNum; y = yNum; }
+      else { x = x.toLowerCase(); y = y.toLowerCase(); }
+
+      return dir === "asc" ? (x > y ? 1 : x < y ? -1 : 0) : (x < y ? 1 : x > y ? -1 : 0);
+    });
+
+    rows.forEach(row => table.tBodies[0].appendChild(row));
+
+    // Update arrows
+    document.querySelectorAll('th i').forEach(i => i.className = "bi bi-arrow-down-up");
+    document.getElementById(`arrow-${colKey}`).className = dir === "asc" ? "bi bi-arrow-up" : "bi bi-arrow-down";
+  }
+  </script>
 
 </body>
 </html>

@@ -1,9 +1,9 @@
-D:\USTP Files\My_student_grade_portal\Program 42(locally functional)\
+E:\USTP Files\My student_grade_portal\Program 44\
 │
-├── app.py                      # Your main Flask application
-├── app.db                      # Your SQLite database (in the root)
+├── app.py                      # Main Flask app
+├── app.db                      # SQLite database (auto-created)
 │
-├── templates/                  # All your HTML files
+├── templates/                  # HTML templates
 │   ├── add_instructor.html
 │   ├── add_student.html
 │   ├── change_password.html
@@ -16,19 +16,22 @@ D:\USTP Files\My_student_grade_portal\Program 42(locally functional)\
 │   ├── instructors.html
 │   ├── login.html
 │   ├── logs.html
+│   ├── student_grades.html
+│   ├── student_performance.html
 │   ├── students.html
 │   └── upload_students.html
 │
-├── static/                     # Your CSS, JS, and image files
+├── static/                     # CSS, JS, images
 │   ├── css/
-│   │   ├── student.css
-│   │	└── style.css
+│   │   ├── style.css
+│   │   └── student.css
+│   │
 │   └── js/
-│       ├── student.js
-│   	└── script.js
+│       ├── script.js
+│       └── student.js
 │
-├── uploads/                    # Where uploaded CSV or files are stored
+├── uploads/                    # Uploaded CSV files (auto-created if missing)
 │
-├── requirements.txt            # All dependencies for Render
-├── Procfile                    # Tells Render how to run your app
-└── runtime.txt                 # Specifies your Python version
+├── requirements.txt            # Python dependencies
+├── Procfile                    # Startup command for Render/Railway
+└── runtime.txt                 # Python version (optional but recommended)

@@ -71,4 +71,87 @@
   margin-top: 15px;
 }
 
+/* --- Student Dashboard & Preview Styling --- */
+body {
+    background-color: #f8f9fa;
+    font-family: "Poppins", Arial, sans-serif;
+    color: #333;
+}
+
+/* Container and Headings */
+.container {
+    max-width: 1000px;
+}
+h1, h2, h3 {
+    font-weight: 600;
+}
+h3.text-primary {
+    color: #0d6efd !important;
+}
+
+/* Buttons and Links */
+.btn {
+    border-radius: 8px !important;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:active {
+    transform: scale(0.98);
+}
+.btn-warning {
+    font-weight: 600;
+}
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+.logout-btn:hover {
+    background-color: #bb2d3b;
+}
+
+/* Welcome text */
+.welcome {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #0d6efd;
+    margin-bottom: 1rem;
+}
+
+/* Tabs for Student Dashboard */
+.nav-tabs .nav-link {
+    border-radius: 8px 8px 0 0;
+    font-weight: 500;
+    color: #495057;
+}
+.nav-tabs .nav-link.active {
+    background-color: #fff !important;
+    border-color: #dee2e6 #dee2e6 #fff;
+    color: #0d6efd !important;
+}
+.tab-content {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    padding: 1.5rem;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    .d-flex {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    .btn, .logout-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
 
