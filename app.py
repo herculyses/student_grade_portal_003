@@ -17,19 +17,30 @@ from flask import Response
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 
-# --- Ensure instance folder exists ---
+# --- Ensure upload folder exists ---
 basedir = os.path.abspath(os.path.dirname(__file__))
-db_path = os.path.join(basedir, 'app.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {"connect_args": {"timeout": 15}}
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-# --- Upload settings ---
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-ALLOWED_EXTENSIONS = {'csv'}  # <-- must be defined BEFORE allowed_file()
+ALLOWED_EXTENSIONS = {'csv'}
+
+# --- Neon PostgreSQL (persistent) ---
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    'postgresql+psycopg2://neondb_owner:npg_Ad6CwLvEe2Wo@'
+    'ep-winter-sound-a1vi8gxq-pooler.ap-southeast-1.aws.neon.tech/'
+    'neondb?sslmode=require'
+)
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {"connect_args": {"connect_timeout": 15}}
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+# --- Upload settings ---
+basedir = os.path.abspath(os.path.dirname(__file__))
+UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+ALLOWED_EXTENSIONS = {'csv'}
 
 # --- Models ---
 class User(db.Model):
@@ -298,16 +309,6 @@ def dashboard_student():
         role=role,
         getattr=getattr  # Pass getattr to Jinja2 for dynamic quiz fields
     )
-
-# Download app.db (Admin only)
-@app.route('/dashboard/admin/download_db')
-@login_required(role=['Admin','Instructor'])
-def download_db():
-    if not os.path.exists(db_path):
-        flash("❌ Database file not found!", "danger")
-        return redirect(url_for('dashboard_admin'))
-    flash("⬇️ Database download started.", "success")
-    return send_file(db_path, as_attachment=True)
 
 # View Logs (Admin)
 @app.route('/view_logs')
