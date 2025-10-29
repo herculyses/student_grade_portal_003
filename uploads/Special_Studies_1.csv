@@ -1,50 +1,50 @@
-student_id,name,subject,quiz1,quiz2,quiz3,quiz4,quiz5,quiz6,quiz7,quiz8,midterm_exam,finals_exam,midterm_grade,midterm_remarks,finals_grade,finals_remarks,overall_grade,overall_remarks
-2020307158,"ABIS, JAPPY P",,,,,,,,,,,,,,,,,
-2022302835,"ALMEROL, Ken P",,,,,,,,,,,,,,,,,
-2022303127,"BARTOLOME, Lanz S",,,,,,,,,,,,,,,,,
-2022300882,"BUCANA, Maria Lea E",,,,,,,,,,,,,,,,,
-2021308629,"CACULBA, DAWN DESIRE E.",,,,,,,,,,,,,,,,,
-2022302713,"CALISO, Jayde N",,,,,,,,,,,,,,,,,
-2022307360,"CASTILLO, Kurt Cyrus V",,,,,,,,,,,,,,,,,
-2021305030,"CELLO, IVY ANTOINETTE G",,,,,,,,,,,,,,,,,
-2021309010,"CHAN, Mark Chester A.",,,,,,,,,,,,,,,,,
-2022302103,"CURTINA, ERLINE JEAN A",,,,,,,,,,,,,,,,,
-2022305934,"DABLO, Angelica D",,,,,,,,,,,,,,,,,
-2022303504,"DADIS, Ian Jay M",,,,,,,,,,,,,,,,,
-2021300579,"DAP-OG, CLIENT ZILDJIAN T",,,,,,,,,,,,,,,,,
-2022301562,"DEL SOCORRO, Charles T",,,,,,,,,,,,,,,,,
-2021303723,"ELBANBUENA, Stephen Shammah L.",,,,,,,,,,,,,,,,,
-2022300430,"GABACA, Leandra Kate B",,,,,,,,,,,,,,,,,
-2022303398,"GACANG, Riza Mae E",,,,,,,,,,,,,,,,,
-2022301605,"GADOR, Khobe Andre E",,,,,,,,,,,,,,,,,
-2022310480,"GERALDEZ, SHANE ANJONETTE G",,,,,,,,,,,,,,,,,
-2022304781,"HUERBANA, Efren Bernard Shean D",,,,,,,,,,,,,,,,,
-2021305148,"JACUTIN, Janellisha Mae D",,,,,,,,,,,,,,,,,
-2022307389,"JAMERO, ANGELO P",,,,,,,,,,,,,,,,,
-2022304499,"LATRAS, Christian Noel B",,,,,,,,,,,,,,,,,
-2022301955,"LLAUSAS, MARIA JO M",,,,,,,,,,,,,,,,,
-2022301558,"MAANDIG, EMMANUEL B",,,,,,,,,,,,,,,,,
-2022307561,"MABITASAN, KSYNNIA VYL MAGDALES",,,,,,,,,,,,,,,,,
-2022303665,"MACUMAO, Marjorie C",,,,,,,,,,,,,,,,,
-2022307063,"MAGALLANES, Amarie Giane N",,,,,,,,,,,,,,,,,
-2022307172,"MAH, Nathaniel R",,,,,,,,,,,,,,,,,
-2022309767,"MINO, Dexther S",,,,,,,,,,,,,,,,,
-2020301190,"NAGUITA , Brent Christian Wong",,,,,,,,,,,,,,,,,
-2022303088,"NARVASA, Cassey R",,,,,,,,,,,,,,,,,
-2022309893,"OCHIGUE, Laila S",,,,,,,,,,,,,,,,,
-2022302230,"PABLICO, Klent Rejie T",,,,,,,,,,,,,,,,,
-2022302619,"RANARA , Jethro Lee B",,,,,,,,,,,,,,,,,
-2022310746,"RATUNIL, Angela Cecille",,,,,,,,,,,,,,,,,
-2022301586,"SABIT, Ernest C",,,,,,,,,,,,,,,,,
-2022301682,"SALON, Charlene G",,,,,,,,,,,,,,,,,
-2022303419,"SAMOY, Sweet Myles D",,,,,,,,,,,,,,,,,
-2022307423,"SAYSON, Maria Tres C",,,,,,,,,,,,,,,,,
-2022304698,"SISON, Michel R",,,,,,,,,,,,,,,,,
-2022300510,"SOLDEVILLA, Mikaela E",,,,,,,,,,,,,,,,,
-2022301310,"TUÑACAO , Kris Gwynneth E",,,,,,,,,,,,,,,,,
-2022309880,"UDANG, Cris Vincent R.",,,,,,,,,,,,,,,,,
-2022307511,"VALLEJOS, Megan M",,,,,,,,,,,,,,,,,
-2022306855,"VICEN, Gevan Isaac B",,,,,,,,,,,,,,,,,
-2022309828,"VILLEGAS, Rhyan Ojie O",,,,,,,,,,,,,,,,,
-2022308520,"ZARATE, Mylene T",,,,,,,,,,,,,,,,,
-2022301650,"ZORILLA, Christine Joy E",,,,,,,,,,,,,,,,,
+student_id,name,subject,midterm_grade,midterm_remarks
+2020307158,"ABIS, JAPPY P",Special Studies for GE 1,1.75,No progress report 10
+2022302835,"ALMEROL, Ken P",Special Studies for GE 1,1.75,No progress report 10
+2022303127,"BARTOLOME, Lanz S",Special Studies for GE 1,1.25,Passed!
+2022300882,"BUCANA, Maria Lea E",Special Studies for GE 1,1.25,Passed!
+2021308629,"CACULBA, DAWN DESIRE E.",Special Studies for GE 1,1.25,Passed!
+2022302713,"CALISO, Jayde N",Special Studies for GE 1,1.25,Passed!
+2022307360,"CASTILLO, Kurt Cyrus V",Special Studies for GE 1,1.25,Passed!
+2021305030,"CELLO, IVY ANTOINETTE G",Special Studies for GE 1,,Passed!
+2021309010,"CHAN, Mark Chester A.",Special Studies for GE 1,1.25,Passed!
+2022302103,"CURTINA, ERLINE JEAN A",Special Studies for GE 1,1.25,Passed!
+2022305934,"DABLO, Angelica D",Special Studies for GE 1,1.25,Passed!
+2022303504,"DADIS, Ian Jay M",Special Studies for GE 1,1.25,Passed!
+2021300579,"DAP-OG, CLIENT ZILDJIAN T",Special Studies for GE 1,2.00,Passed!
+2022301562,"DEL SOCORRO, Charles T",Special Studies for GE 1,1.25,Passed!
+2021303723,"ELBANBUENA, Stephen Shammah L.",Special Studies for GE 1,1.25,Passed!
+2022300430,"GABACA, Leandra Kate B",Special Studies for GE 1,1.75,No progress report 10
+2022303398,"GACANG, Riza Mae E",Special Studies for GE 1,1.25,Passed!
+2022301605,"GADOR, Khobe Andre E",Special Studies for GE 1,1.25,Passed!
+2022310480,"GERALDEZ, SHANE ANJONETTE G",Special Studies for GE 1,1.75,No progress report 10
+2022304781,"HUERBANA, Efren Bernard Shean D",Special Studies for GE 1,1.25,Passed!
+2021305148,"JACUTIN, Janellisha Mae D",Special Studies for GE 1,1.75,No progress report 10
+2022307389,"JAMERO, ANGELO P",Special Studies for GE 1,1.25,Passed!
+2022304499,"LATRAS, Christian Noel B",Special Studies for GE 1,1.25,Passed!
+2022301955,"LLAUSAS, MARIA JO M",Special Studies for GE 1,1.75,No progress report 10
+2022301558,"MAANDIG, EMMANUEL B",Special Studies for GE 1,1.25,Passed!
+2022307561,"MABITASAN, KSYNNIA VYL MAGDALES",Special Studies for GE 1,5.00,Failed
+2022303665,"MACUMAO, Marjorie C",Special Studies for GE 1,1.25,Passed!
+2022307063,"MAGALLANES, Amarie Giane N",Special Studies for GE 1,1.75,No progress report 10
+2022307172,"MAH, Nathaniel R",Special Studies for GE 1,1.25,Passed!
+2022309767,"MINO, Dexther S",Special Studies for GE 1,1.25,Passed!
+2020301190,"NAGUITA , Brent Christian Wong",Special Studies for GE 1,1.25,Passed!
+2022303088,"NARVASA, Cassey R",Special Studies for GE 1,1.25,Passed!
+2022309893,"OCHIGUE, Laila S",Special Studies for GE 1,1.75,No progress report 10
+2022302230,"PABLICO, Klent Rejie T",Special Studies for GE 1,1.75,No progress report 10
+2022302619,"RANARA , Jethro Lee B",Special Studies for GE 1,1.25,Passed!
+2022310746,"RATUNIL, Angela Cecille",Special Studies for GE 1,1.25,Passed!
+2022301586,"SABIT, Ernest C",Special Studies for GE 1,1.25,Passed!
+2022301682,"SALON, Charlene G",Special Studies for GE 1,1.25,Passed!
+2022303419,"SAMOY, Sweet Myles D",Special Studies for GE 1,1.75,No progress report 10
+2022307423,"SAYSON, Maria Tres C",Special Studies for GE 1,1.75,No progress report 10
+2022304698,"SISON, Michel R",Special Studies for GE 1,1.25,Passed!
+2022300510,"SOLDEVILLA, Mikaela E",Special Studies for GE 1,1.75,No progress report 10
+2022301310,"TUÑACAO , Kris Gwynneth E",Special Studies for GE 1,1.25,Passed!
+2022309880,"UDANG, Cris Vincent R.",Special Studies for GE 1,2.00,No progress report 10
+2022307511,"VALLEJOS, Megan M",Special Studies for GE 1,1.25,Passed!
+2022306855,"VICEN, Gevan Isaac B",Special Studies for GE 1,1.75,No progress report 10
+2022309828,"VILLEGAS, Rhyan Ojie O",Special Studies for GE 1,1.25,Passed!
+2022308520,"ZARATE, Mylene T",Special Studies for GE 1,1.25,Passed!
+2022301650,"ZORILLA, Christine Joy E",Special Studies for GE 1,1.25,Passed!

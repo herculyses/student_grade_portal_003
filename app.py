@@ -883,8 +883,6 @@ if __name__ == '__main__':
         # Default users
         if not User.query.filter_by(username='admin').first():
             db.session.add(User(username='admin', password=generate_password_hash('fangnailed'), role='Admin'))
-        if not User.query.filter_by(username='instructor').first():
-            db.session.add(User(username='instructor', password=generate_password_hash('instr123'), role='Instructor'))
         if not User.query.filter_by(username='student').first():
             db.session.add(User(username='student', password=generate_password_hash('stud123'), role='Student'))
 
